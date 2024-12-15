@@ -15,8 +15,8 @@ import { GridActionChangeLang } from './GridActionChangeLang';
 import { GridActionYoutube } from './GridActionYoutube';
 import { GridActionOpenWebpage } from './GridActionOpenWebpage.js';
 import { GridActionAudio } from './GridActionAudio.js';
-import { GridActionHTTP } from "./GridActionHTTP.js";
-import {GridActionWordForm} from "./GridActionWordForm.js";
+import { GridActionHTTP } from './GridActionHTTP.js';
+import { GridActionWordForm } from './GridActionWordForm.js';
 import { GridActionUART } from './GridActionUART.js';
 import { GridActionSystem } from './GridActionSystem';
 
@@ -31,6 +31,7 @@ class GridElement extends Model({
     label: [Object, String, undefined], //map locale -> translation, e.g. "de" => LabelDE
     wordForms: [Model.Array(Object)], //Array of WordForm, removed for performance reasons
     backgroundColor: [String],
+    borderColor: [String],
     colorCategory: [String],
     hidden: [Boolean],
     dontCollect: [Boolean],

@@ -13,7 +13,7 @@ import { GridActionWebradio } from './model/GridActionWebradio.js';
 import { MetaData } from './model/MetaData.js';
 import { GridActionSpeakCustom } from './model/GridActionSpeakCustom.js';
 import { util } from './util/util.js';
-import {stateService} from "./service/stateService.js";
+import { stateService } from './service/stateService.js';
 
 var templates = {};
 
@@ -59,6 +59,7 @@ function getGridElementNormal(gridElem, metadata) {
         imgContainerMargin = '0';
     }
     let backgroundColor = MetaData.getElementColor(gridElem, metadata);
+    let elementBorderColor = MetaData.getElementBorderColor(gridElem, metadata);
     let fontColor = fontUtil.getHighContrastColor(backgroundColor);
     let ariaLabel = getAriaLabel(gridElem);
 
@@ -68,9 +69,10 @@ function getGridElementNormal(gridElem, metadata) {
     }" data-id="${gridElem.id}" data-label="${label}" data-img-id="${imgId}" data-type="${gridElem.type}">
     <div class="grid-item-content" tabindex="40" aria-label="${ariaLabel}" id="${gridElem.id}" data-id="${
         gridElem.id
+        // this is the piece of code we need to fix -- below
     }" data-empty="${
         !label && !imgData
-    }" style="${`background-color: ${backgroundColor}; border: 1px solid ${getBorderColor(metadata)}`}">
+    }" style="${`background-color: ${backgroundColor}; border: 10px solid ${elementBorderColor}`}">
         <div class="img-container" style="width: 100%; max-height: ${imgContainerMaxHeight};">
             <img src="${imgData}" draggable="false" style="max-width: 98%; max-height: 98%; object-fit: contain; margin: 1%;" crossorigin="anonymous"/>
         </div>
@@ -84,6 +86,7 @@ function getGridElementNormal(gridElem, metadata) {
 function getGridElementCollect(gridElem, metadata) {
     gridElem = fillDefaultValues(gridElem);
     let backgroundColor = MetaData.getElementColor(gridElem, metadata);
+    let borderColor = MetaData.getElementBorderColor(gridElem, metadata);
 
     var template = `
 <li class="item" data-w="${gridElem.width}" data-h="${gridElem.height}" data-x="${gridElem.posX}" data-y="${
@@ -91,7 +94,7 @@ function getGridElementCollect(gridElem, metadata) {
     }" data-id="${gridElem.id}" data-type="${gridElem.type}">
     <div class="grid-item-content" tabindex="40" id="${gridElem.id}" data-id="${
         gridElem.id
-    }" style="${`background-color: ${backgroundColor}; border: 1px solid ${getBorderColor(metadata)}`}">
+    }" style="${`background-color: ${backgroundColor}; border: 10px solid red`}">
         <div class="collect-outer-container text-container" style="${`position: absolute; display: flex; top: 5px; right: 5px; bottom: 5px; left: 5px;`}">
         </div>
     </div>
@@ -110,7 +113,7 @@ function getGridElementPredict(gridElem, metadata) {
     }" data-id="${gridElem.id}" data-label="${label}" data-type="${gridElem.type}">
     <div class="grid-item-content" tabindex="40" id="${gridElem.id}" data-id="${
         gridElem.id
-    }" style="${`background-color: rgb(255,228,178); border: 1px solid ${getBorderColor(metadata)}`}">
+    }" style="${`background-color: rgb(255,228,178); border: 10px solid red`}">
         <div class="text-container" style="${txtContainerStyle}"><span style="display: table-cell; vertical-align: middle;">${label}</span></div>
     </div>
 </li>`;
@@ -128,7 +131,7 @@ function getGridElementYTPlayer(gridElem, metadata) {
     }" data-id="${gridElem.id}" data-label="${label}" data-type="${gridElem.type}">
     <div class="grid-item-content" tabindex="40" aria-label="${i18nService.t('ELEMENT_TYPE_YT_PLAYER')}" id="${
         gridElem.id
-    }" data-id="${gridElem.id}" style="${`border: 1px solid ${getBorderColor(metadata)}`}">
+    }" data-id="${gridElem.id}" style="${`border: 10px solid red`}">
         ${
             stopClicking
                 ? '<div id="youtubeClickPreventer" onclick="event.stopPropagation()" style="z-index: 100; position: absolute; top: 0; bottom: 0; left: 0; right: 0; height: 100%; width: 100%"></div>'
@@ -165,8 +168,8 @@ function getHintsElement(gridElem) {
 }
 
 function getBorderColor(metadata) {
-    let backgroundColor = metadata && metadata.colorConfig ? metadata.colorConfig.gridBackgroundColor : '#ffffff';
-    return fontUtil.getHighContrastColor(backgroundColor, 'whitesmoke', 'gray');
+    let borderColor = metadata && metadata.colorConfig ? metadata.colorConfig.gridBackgroundColor : '#ffffff';
+    return fontUtil.getHighContrastColor(borderColor, 'whitesmoke', 'gray');
 }
 
 function getAriaLabel(gridElem) {

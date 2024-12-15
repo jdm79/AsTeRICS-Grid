@@ -63,6 +63,19 @@ class MetaData extends Model({
         if (!metadata.colorConfig.colorSchemesActivated || !gridElement.colorCategory || index === -1) {
             return gridElement.backgroundColor || metadata.colorConfig.elementBackgroundColor;
         }
+
+        return colorScheme.colors[index];
+    }
+    static getElementBorderColor(gridElement, metadata) {
+        if (!metadata || !metadata.colorConfig) {
+            return constants.DEFAULT_ELEMENT_BORDER_COLOR;
+        }
+        let colorScheme = MetaData.getActiveColorScheme(metadata);
+        let index = colorScheme.categories.indexOf(gridElement.colorCategory);
+        if (!metadata.colorConfig.colorSchemesActivated || !gridElement.colorCategory || index === -1) {
+            return gridElement.borderColor || metadata.colorConfig.elementBorderColor;
+        }
+
         return colorScheme.colors[index];
     }
 

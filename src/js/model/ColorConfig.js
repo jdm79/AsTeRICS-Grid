@@ -8,6 +8,7 @@ class ColorConfig extends Model({
     activeColorScheme: [String],
     additionalColorSchemes: [Array],
     elementBackgroundColor: [String],
+    elementBorderColor: [String],
     gridBackgroundColor: [String]
 }) {
     constructor(properties) {
@@ -26,6 +27,7 @@ ColorConfig.defaults({
     activeColorScheme: constants.DEFAULT_COLOR_SCHEMES[0].name,
     additionalColorSchemes: [],
     elementBackgroundColor: constants.DEFAULT_ELEMENT_BACKGROUND_COLOR,
+    elementBorderColor: constants.DEFAULT_ELEMENT_BORDER_COLOR,
     gridBackgroundColor: constants.DEFAULT_GRID_BACKGROUND_COLOR
 });
 

@@ -21,7 +21,7 @@ let OBF_IMAGES_PATH_PREFIX = 'images/';
 let OBF_BOARD_POSTFIX = '.obf';
 let OBF_MANIFEST_FILENAME = 'manifest.json';
 
-obfConverter.gridDataToOBF = function(gridData, manifest) {
+obfConverter.gridDataToOBF = function (gridData, manifest) {
     let columns = new GridData(gridData).getWidthWithBounds();
     let obfGrid = {
         format: OBF_FORMAT_VERSION,
@@ -45,7 +45,7 @@ obfConverter.gridDataToOBF = function(gridData, manifest) {
     return obfGrid;
 };
 
-obfConverter.backupDataToOBZ = async function(backupData, options = {}) {
+obfConverter.backupDataToOBZ = async function (backupData, options = {}) {
     if (!backupData || !backupData.grids) {
         return null;
     }
@@ -69,7 +69,7 @@ obfConverter.backupDataToOBZ = async function(backupData, options = {}) {
     // move images from inline data in boards to separate files
     for (let board of boards) {
         for (let button of board.buttons) {
-            let image = board.images.find(i => i.id === button.image_id);
+            let image = board.images.find((i) => i.id === button.image_id);
             if (image && image.data) {
                 let suffix = imageUtil.dataStringToFileSuffix(image.data);
                 let path = `${OBF_IMAGES_PATH_PREFIX}${image.id}.${suffix}`;
@@ -94,7 +94,8 @@ function gridElementToObfButton(gridElement, obfGrid) {
     let obfButton = {
         id: gridElement.id,
         label: i18nService.getTranslation(gridElement.label),
-        background_color: gridElement.backgroundColor
+        background_color: gridElement.backgroundColor,
+        border_color: gridElement.borderColor
     };
     let obfImage = gridImageToObfImage(gridElement.image);
     if (obfImage) {
@@ -136,15 +137,18 @@ function gridImageToObfImage(gridImage) {
  *                    contain the the obfId. Therefore in this case an additional step is needed to replace these obfIds
  *                    with the actual IDs of the GridData objects.
  */
-obfConverter.OBFToGridData = function(obfObject, obfObjects) {
+obfConverter.OBFToGridData = function (obfObject, obfObjects) {
     if (!obfObject) {
         return Promise.resolve(null);
     }
     let promises = [];
     let locale = obfObject.locale ? obfObject.locale.toLowerCase() : i18nService.getContentLang();
     let baseLocale = i18nService.getBaseLang(locale);
-    locale = i18nService.getAllLangCodes().includes(locale) ? locale :
-        (i18nService.getAllLangCodes().includes(baseLocale) ? baseLocale : i18nService.getContentLang());
+    locale = i18nService.getAllLangCodes().includes(locale)
+        ? locale
+        : i18nService.getAllLangCodes().includes(baseLocale)
+        ? baseLocale
+        : i18nService.getContentLang();
     obfObject.grid = obfObject.grid || { rows: 1, columns: 1, order: [] };
     let gridData = new GridData({
         obfId: obfObject.id,
@@ -165,7 +169,8 @@ obfConverter.OBFToGridData = function(obfObject, obfObjects) {
                 label: i18nService.getTranslationObject(button.label, locale),
                 x: xy.x || 0,
                 y: xy.y || 0,
-                backgroundColor: button.background_color
+                backgroundColor: button.background_color,
+                borderColor: button.border_color
             });
             gridElement = addActions(gridElement, button, obfObject, obfObjects);
             let speakActions = gridElement.actions.filter((a) => a.modelName === GridActionSpeak.getModelName());
@@ -191,7 +196,7 @@ obfConverter.OBFToGridData = function(obfObject, obfObjects) {
  * @param obzFileMap a map containing all files from the .obz archive in form {filepath => content}
  * @return {Promise<{metadata: MetaData, grids: *[]}>}
  */
-obfConverter.OBZToImportData = async function(obzFileMap) {
+obfConverter.OBZToImportData = async function (obzFileMap) {
     let grids = [];
     let manifest = obzFileMap[OBF_MANIFEST_FILENAME];
     let metadata = new MetaData();
@@ -211,7 +216,7 @@ obfConverter.OBZToImportData = async function(obzFileMap) {
         return total;
     }, {});
     let obfBoardIds = Object.keys(manifest.paths.boards);
-    let homeObfId = obfBoardIds.find(id => manifest.paths.boards[id] === manifest.root);
+    let homeObfId = obfBoardIds.find((id) => manifest.paths.boards[id] === manifest.root);
     homeObfId = homeObfId || obfBoardIds[0];
     metadata.homeGridId = obfIdToGridId[homeObfId];
 

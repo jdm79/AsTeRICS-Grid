@@ -7,9 +7,9 @@ import { util } from '../util/util';
 import { dataService } from './data/dataService.js';
 import { MetaData } from '../model/MetaData.js';
 import { arasaacService } from './pictograms/arasaacService.js';
-import $ from "../externals/jquery.js";
-import {constants} from "../util/constants.js";
-import {TextConfig} from "../model/TextConfig.js";
+import $ from '../externals/jquery.js';
+import { constants } from '../util/constants.js';
+import { TextConfig } from '../model/TextConfig.js';
 import { gridUtil } from '../util/gridUtil';
 
 let printService = {};
@@ -59,6 +59,7 @@ printService.setGridInstance = function (instance) {
  * @param options (optional) object containing options
  * @param options.showLinks if true, links on elements are created which are referring to another grid/page
  * @param options.backgroundColor object with r/g/b properties defining a background color for grid elements. Default: white.
+ * @param options.borderColor object with r/g/b properties defining a border color for grid elements. Default: white.
  * @param options.includeGlobalGrid if true, the global grid is included to each grid
  * @param options.progressFn a function that is called in order to report progress of the task.
  *                           Parameters passed: <percentage:Number, text:String, abortFn:Function>.
