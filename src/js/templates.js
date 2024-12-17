@@ -94,7 +94,7 @@ function getGridElementCollect(gridElem, metadata) {
     }" data-id="${gridElem.id}" data-type="${gridElem.type}">
     <div class="grid-item-content" tabindex="40" id="${gridElem.id}" data-id="${
         gridElem.id
-    }" style="${`background-color: ${backgroundColor}; border: 10px solid red`}">
+    }" style="${`background-color: ${backgroundColor}; border: 1px solid gray`}">
         <div class="collect-outer-container text-container" style="${`position: absolute; display: flex; top: 5px; right: 5px; bottom: 5px; left: 5px;`}">
         </div>
     </div>
@@ -113,7 +113,7 @@ function getGridElementPredict(gridElem, metadata) {
     }" data-id="${gridElem.id}" data-label="${label}" data-type="${gridElem.type}">
     <div class="grid-item-content" tabindex="40" id="${gridElem.id}" data-id="${
         gridElem.id
-    }" style="${`background-color: rgb(255,228,178); border: 10px solid red`}">
+    }" style="${`background-color: rgb(255,228,178); border: 1px solid gray`}">
         <div class="text-container" style="${txtContainerStyle}"><span style="display: table-cell; vertical-align: middle;">${label}</span></div>
     </div>
 </li>`;
@@ -131,7 +131,7 @@ function getGridElementYTPlayer(gridElem, metadata) {
     }" data-id="${gridElem.id}" data-label="${label}" data-type="${gridElem.type}">
     <div class="grid-item-content" tabindex="40" aria-label="${i18nService.t('ELEMENT_TYPE_YT_PLAYER')}" id="${
         gridElem.id
-    }" data-id="${gridElem.id}" style="${`border: 10px solid red`}">
+    }" data-id="${gridElem.id}" style="${`border: 1px solid gray`}">
         ${
             stopClicking
                 ? '<div id="youtubeClickPreventer" onclick="event.stopPropagation()" style="z-index: 100; position: absolute; top: 0; bottom: 0; left: 0; right: 0; height: 100%; width: 100%"></div>'
@@ -167,10 +167,10 @@ function getHintsElement(gridElem) {
     return `<span style="position: absolute; right: 0; color: #5a717a">${hiddenHint + ' ' + navHint}</span>`;
 }
 
-function getBorderColor(metadata) {
-    let borderColor = metadata && metadata.colorConfig ? metadata.colorConfig.gridBackgroundColor : '#ffffff';
-    return fontUtil.getHighContrastColor(borderColor, 'whitesmoke', 'gray');
-}
+// function getBorderColor(metadata) {
+//     let borderColor = metadata && metadata.colorConfig ? metadata.colorConfig.gridBackgroundColor : '#ffffff';
+//     return fontUtil.getHighContrastColor(borderColor, 'whitesmoke', 'gray');
+// }
 
 function getAriaLabel(gridElem) {
     let label = i18nService.getTranslation(gridElem.label);
